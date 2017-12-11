@@ -7,7 +7,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.Stack;
 
-public class Node {
+class Node {
 
 	int data;
 	List<Node> adj;
@@ -30,7 +30,7 @@ public class Node {
 
 }
 
-class Graph {
+public class Graph {
 	private Set<Node> nodes;
 	
 	Graph(){
