@@ -1,8 +1,10 @@
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-public class MinimalBST {
+class MinimalBST {
 
+	//BST with minimum height
 	public TreeExample getMinimalBST(List<Integer> input) {
 
 		TreeExample output = new TreeExample();
@@ -17,7 +19,8 @@ public class MinimalBST {
 		return output;
 	}
 
-	public List<Integer> getLeftElements(List<Integer> input) {
+	//helper method
+	private  List<Integer> getLeftElements(List<Integer> input) {
 		List<Integer> left = new ArrayList<Integer>();
 		for (int i = 0; i < input.size() / 2; i++) {
 			int temp = input.get(i);
@@ -26,7 +29,8 @@ public class MinimalBST {
 		return left;
 	}
 
-	public List<Integer> getRightElements(List<Integer> input) {
+	//helper method
+	private List<Integer> getRightElements(List<Integer> input) {
 		List<Integer> right = new ArrayList<Integer>();
 		for (int i = input.size() / 2 + 1; i < input.size(); i++) {
 			int temp = input.get(i);
@@ -39,7 +43,6 @@ public class MinimalBST {
 
 		List<Integer> input = new ArrayList<Integer>();
 
-//		input.add(0);
 		input.add(1);
 		input.add(2);
 		input.add(3);
@@ -50,22 +53,27 @@ public class MinimalBST {
 		input.add(100);
 
 		MinimalBST m = new MinimalBST();
-//		System.out.println(m.getMinimalBST(input));
+		// System.out.println(m.getMinimalBST(input));
 		TreeExample.printBinaryTree(m.getMinimalBST(input), 0);
+		TreeExample.treeBFS(m.getMinimalBST(input));
 
 	}
 }
 
-class TreeExample {
+public class TreeExample {
 	int data;
 	TreeExample left;
 	TreeExample right;
 
-	public String toString() {
-		return "data : " + this.data + " " + "left: " + this.left + "right: "
-				+ this.right + "\n";
+	TreeExample() {
+		data = 9999999;
 	}
 
+	public String toString() {
+		return  this.data + " " ;
+	}
+
+	// prints the graphical form of the binary tree starting from the root
 	public static void printBinaryTree(TreeExample root, int level) {
 		if (root == null)
 			return;
@@ -77,5 +85,35 @@ class TreeExample {
 		} else
 			System.out.println(root.data);
 		printBinaryTree(root.left, level + 1);
+	}
+
+	// Breadth first tree traversal
+	public static void treeBFS(TreeExample tree) {
+		int count = 0;
+		LinkedList<TreeExample> child = new LinkedList<TreeExample>();
+		LinkedList<TreeExample> parent = new LinkedList<TreeExample>();
+
+		child.add(tree);
+		System.out.println(child + " " + count++);
+		parent.addAll(child);
+		child.clear();
+
+		while (parent.size() > 0) {
+
+			for (TreeExample tr : parent) {
+
+				if (tr.left != null) {
+					child.add(tr.left);
+				}
+
+				if (tr.right != null) {
+					child.add(tr.right);
+				}
+			}
+			System.out.println(child + " " + count++);
+			parent.clear();
+			parent.addAll(child);
+			child.clear();
+		}
 	}
 }
