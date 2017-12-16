@@ -3,7 +3,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 class MinimalBST {
-
 	// BST with minimum height
 	public TreeExample getMinimalBST(List<Integer> input) {
 
@@ -46,16 +45,18 @@ public class TreeExample {
 	TreeExample left;
 	TreeExample right;
 
-	//constructor with no params
+	public static final int NULLVALUE = 999;
+
+	// constructor with no params
 	TreeExample() {
-		data = 9999999;
+		data = NULLVALUE;
 	}
 
-	//constructor with one parameter
+	// constructor with one parameter
 	TreeExample(int data) {
 		this.data = data;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.data + " ";
@@ -117,19 +118,40 @@ public class TreeExample {
 
 	}
 
-	//helper method
+	// helper method
 	private boolean checkIfBalanced() {
 		return (this.hasNoChildren())
 				|| (this.right == null && this.left.hasNoChildren())
 				|| (this.left == null && this.right.hasNoChildren());
 	}
-	
-	//helper method
-	private boolean hasNoChildren()
-	{
+
+	// helper method
+	private boolean hasNoChildren() {
 		return (this.right == null && this.left == null);
 	}
-	
+
+	// check if a binary tree is a BST
+	public boolean isValidBST() {
+		return this.checkIfBST(this, NULLVALUE, NULLVALUE);
+	}
+
+	// helper function
+	private boolean checkIfBST(TreeExample root, int min, int max) {
+		if (root == null) 
+			return true;
+		
+		if (min == NULLVALUE && max != NULLVALUE && max <= root.data)
+			return false;
+
+		if (max == NULLVALUE && min != NULLVALUE && min >= root.data)
+			return false;
+
+		else
+			return checkIfBST(root.left, min, root.data)
+					&& checkIfBST(root.right, root.data, max);
+
+	}
+
 	public static void main(String args[]) {
 
 		List<Integer> input = new ArrayList<Integer>();
@@ -145,26 +167,32 @@ public class TreeExample {
 
 		MinimalBST m = new MinimalBST();
 		// System.out.println(m.getMinimalBST(input));
-		printBinaryTree(m.getMinimalBST(input), 0);
-//		m.getMinimalBST(input).treeBFS();
-//		System.out.println(m.getMinimalBST(input).isBalancedBST());
-		
-		TreeExample t1 =  new TreeExample(1);
-		TreeExample t2 =  new TreeExample(2);
-		TreeExample t3 =  new TreeExample(3);
-		TreeExample t4 =  new TreeExample(4);
-		TreeExample t5 =  new TreeExample(5);
-		
-		
-		t1.right = t2;
-		t1.left = t3;
-		t2.left = t4;
-		t3.left = t5;
-		
-		System.out.println(t1.isBalancedBST());
-		printBinaryTree(t1, 0);
-		
-		
+		// printBinaryTree(m.getMinimalBST(input), 0);
+		// m.getMinimalBST(input).treeBFS();
+		// System.out.println(m.getMinimalBST(input).isBalancedBST());
+
+		TreeExample t1 = new TreeExample(1);
+		TreeExample t2 = new TreeExample(2);
+		TreeExample t3 = new TreeExample(3);
+		TreeExample t4 = new TreeExample(4);
+		TreeExample t5 = new TreeExample(5);
+		TreeExample t6 = new TreeExample(6);
+
+		// t1.right = t2;
+		// t1.left = t3;
+		// t2.left = t4;
+		// t3.left = t5;
+
+		// TreeExample balanced = new TreeExample(3);
+		t3.left = t1;
+		t3.right = t5;
+		// t5.left = t4;
+		t5.right = t2;
+
+		// System.out.println(t1.isBalancedBST());
+		// printBinaryTree(t1, 0);
+		printBinaryTree(t3, 0);
+		System.out.println(t3.isValidBST());
 
 	}
 
