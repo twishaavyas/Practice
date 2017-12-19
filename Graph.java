@@ -117,24 +117,31 @@ public class Graph {
 		Node node0 = new Node(0);
 		Node node1 = new Node(1);
 		Node node3 = new Node(3);
+		Node node4 = new Node(4);
+		Node node5 = new Node(5);
+		Node node6 = new Node(6);
 		
-		g.addEdge(node0, node1);
-		g.addEdge(node1, node2);
-		g.addEdge(node2, node0);
-		g.addEdge(node2, node3);
-		g.addEdge(node3, node3);
+		
+		g.addEdge(node1, node4);
+		g.addEdge(node6, node2);
+		g.addEdge(node2, node4);
+		g.addEdge(node6, node1);
+		g.addEdge(node4, node3);
 
 		
 		System.out.println("Following is Breadth First Traversal "
 				+ "(starting from vertex 2)");
 
-		g.bfs(node2);
+		g.bfs(node6);
 		
 		System.out.println("\nFollowing is Depth First Traversal "
 				+ "(starting from vertex 2)");
 
-		g.dfs(node2);
+		g.dfs(node6);
 		
 //		System.out.println(g + "graoh");
 	}
 }
+
+
+

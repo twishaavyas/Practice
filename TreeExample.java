@@ -137,9 +137,9 @@ public class TreeExample {
 
 	// helper function
 	private boolean checkIfBST(TreeExample root, int min, int max) {
-		if (root == null) 
+		if (root == null)
 			return true;
-		
+
 		if (min == NULLVALUE && max != NULLVALUE && max <= root.data)
 			return false;
 
@@ -150,6 +150,47 @@ public class TreeExample {
 			return checkIfBST(root.left, min, root.data)
 					&& checkIfBST(root.right, root.data, max);
 
+	}
+
+	// first common ancestor of two nodes in a tree
+	public TreeExample commonAncestor(TreeExample a, TreeExample b) {
+		if (!treeHasNode(this, a) || !treeHasNode(this, b))
+			return null;
+		if (treeHasNode(a, b))
+			return a;
+		if (treeHasNode(b, a))
+			return b;
+
+		return this.computeFirstAncestor(this, a, b);
+	}
+
+	// helper function
+	private TreeExample computeFirstAncestor(TreeExample root, TreeExample a,
+			TreeExample b) {
+		boolean firstIsOnLeft = treeHasNode(root.left, a);
+		boolean secondIsOnLeft = treeHasNode(root.left, b);
+
+		if (firstIsOnLeft != secondIsOnLeft)
+			return root;
+
+		else if (firstIsOnLeft)
+			return computeFirstAncestor(root.left, a, b);
+
+		else
+			return computeFirstAncestor(root.right, a, b);
+
+	}
+
+	// helper function
+	private boolean treeHasNode(TreeExample root, TreeExample a) {
+		if (root == null)
+			return false;
+		else if (root == a)
+			return true;
+		else if (treeHasNode(root.left, a) || treeHasNode(root.right, a))
+			return true;
+		else
+			return false;
 	}
 
 	public static void main(String args[]) {
@@ -186,13 +227,14 @@ public class TreeExample {
 		// TreeExample balanced = new TreeExample(3);
 		t3.left = t1;
 		t3.right = t5;
-		// t5.left = t4;
+		t5.left = t4;
 		t5.right = t2;
 
 		// System.out.println(t1.isBalancedBST());
 		// printBinaryTree(t1, 0);
 		printBinaryTree(t3, 0);
 		System.out.println(t3.isValidBST());
+		System.out.println(t3.commonAncestor(t2, t1));
 
 	}
 
